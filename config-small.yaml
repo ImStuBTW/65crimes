@@ -1,0 +1,137 @@
+units:
+  kx: 17
+  ky: 17
+  casepadding: 1.5
+points:
+  zones:
+    matrix:
+      anchor.shift: [100, 75]
+      rotate: 270
+      key:
+        spread: 1kx
+        padding: 1ky
+      columns:
+        num:
+          rows:
+            one.shift: [0kx, 0.33ky]
+            five.shift: [0kx, 0.33ky]
+            nine.shift: [0kx, 0.33ky]
+            backspace:
+              shift: [0kx, 0.25ky]
+            special.skip: true
+        top:
+          key.spread: 1.25kx
+          rows:
+            special.shift: [0kx, 0.25ky]
+        home:
+          rows:
+            escape:
+              height: 1.25ky
+              shift: [0kx, 0.125ky]
+            one.shift: [0kx, 0.125ky]
+            equals.skip: true
+            backspace:
+              height: 1.75ky
+              shift: [0kx, -0.625ky]
+            special.shift: [0kx, 0.625ky]
+        bottom:
+          rows:
+            escape:
+              height: 1.75ky
+              shift: [0kx, 0.375ky]
+            one.shift: [0kx, 0.375ky]
+            dash.skip: true
+            equals:
+              height: 1ky
+              shift: [0kx, -1ky]
+            backspace.shift: [0.25kx, 0.25ky]
+            special.shift: [-0.25kx, 0.25ky]
+        mod:
+          rows:
+            escape:
+              height: 1.25ky
+              shift: [0kx, 0.125ky]
+            one.shift: [0kx, 0.125ky]
+            three:
+              height: 3ky
+              shift: [0kx, 1ky]
+            four.skip: true
+            five.skip: true
+            six.skip: true
+            seven:
+              height: 3kx
+              shift: [0kx, -1ky]
+            eight.skip: true
+            nine:
+              height: 1.25ky
+              shift: [0kx, 0.125ky]
+            zero:
+              height: 1.25ky
+              shift: [0kx, 0.25ky]
+            dash.skip: true
+            equals.shift: [0.25kx, -0.625ky]
+      rows:
+        escape:
+        one:
+        two:
+        three:
+        four:
+        five:
+        six:
+        seven:
+        eight:
+        nine:
+        zero:
+        dash:
+        equals:
+        backspace:
+        special:
+outlines:
+  raw:
+    - what: rectangle
+      where: true
+      size: [15.5, 15.5]
+      fillet: 0.5
+  border:
+    - what: polygon
+      points:
+        - ref: matrix_num_escape
+          shift: [-0.5kx-casepadding, -0.5ky-casepadding]
+        - ref: matrix_top_special
+          shift: [-1.25kx-0.5kx-casepadding, 0.5ky+casepadding]
+        - ref: matrix_mod_special
+          shift: [0.5kx+casepadding, 0.25ky+0.5ky+casepadding]
+        - ref: matrix_mod_equals
+          shift: [0.5kx+casepadding, -0.25ky-0.5ky-casepadding]
+        - ref: matrix_mod_equals
+          shift: [0.25ky+casepadding, -0.25ky-0.5ky-casepadding]
+        - ref: matrix_mod_escape
+          shift: [0.5kx+casepadding, -0.125ky-0.5ky-casepadding]
+      fillet: 1
+pcbs:
+  crimes:
+    outlines:
+      main:
+        outline: border
+    footprints:
+    # Hotswap Choc keys.
+    - what: choc
+      where: true
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: "{{colrow}}"
+      adjust:
+        rotate: 90
+        shift: [0, 0]
+    # Through Hole or SMD Diodes
+    - what: diode
+      where: true
+      params:
+        from: "{{colrow}}"
+        to: "{{row_net}}"
+      adjust:
+        rotate: 90
+        shift: [5, 0]
