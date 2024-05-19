@@ -1,0 +1,405 @@
+units:
+  kx: 17
+  ky: 18
+  casepadding: 1.5
+points:
+  zones:
+    controller:
+      anchor.shift: [320.25, -110.625]
+      key:
+        spread: 5
+        padding: 10
+      columns:
+        parts:
+          rows:
+            mcu:
+    matrix:
+      anchor.shift: [100, 75]
+      rotate: 270
+      key:
+        spread: 1kx
+        padding: 1ky
+        tags: [key, u1]
+      columns:
+        num:
+          key.column_net: row1 #P25
+          rows:
+            one.shift: [0kx, 6] #0.33ky
+            five.shift: [0kx, 6] #0.33ky
+            nine.shift: [0kx, 6] #0.33ky
+            backspace:
+              row_net: col15 #P33
+              shift: [0kx, 0.25ky]
+            special.skip: true
+        top:
+          key.column_net: row2 #P45
+          key.spread: 1.25kx
+          rows:
+            special.shift: [0kx, 0.25ky]
+        home:
+          key.column_net: row3 #P30
+          rows:
+            escape:
+              height: 1.25ky
+              shift: [0kx, 0.125ky]
+              tags: [,u125]
+            one.shift: [0kx, 0.125ky]
+            equals.skip: true
+            backspace:
+              height: 1.75ky
+              shift: [0kx, -0.625ky]
+              tags: [,u175]
+            special.shift: [0kx, 0.625ky]
+        bottom:
+          key.column_net: row4 #P17
+          rows:
+            escape:
+              height: 1.75ky
+              shift: [0kx, 0.375ky]
+              tags: [,u175]
+            one.shift: [0kx, 0.375ky]
+            dash.skip: true
+            equals:
+              height: 1ky
+              shift: [0kx, -1ky]
+            backspace.shift: [0.25kx, 0.25ky]
+            special.shift: [-0.25kx, 0.25ky]
+        mod:
+          key.column_net: row5 #P16
+          rows:
+            escape:
+              height: 1.25ky
+              shift: [0kx, 0.125ky]
+              tags: [,u125]
+            one.shift: [0kx, 0.125ky]
+            two:
+              tags: [,,stabsupport]
+            three:
+              height: 2ky
+              shift: [0kx, 0.5ky]
+              tags: [,u2]
+            four.skip: true
+            five:
+              height: 2ky
+              shift: [0kx, 0ky]
+              tags: [,u2]
+            six.skip: true
+            seven:
+              height: 2ky
+              shift: [0kx, 0ky]
+              tags: [,u2]
+            eight.skip: true
+            nine:
+              height: 1.25ky
+              shift: [0kx, -0.375ky]
+              tags: [,u125, stabsupport]
+            zero:
+              height: 1.25ky
+              shift: [0kx, 0.25ky]
+              tags: [,u125]
+            dash.skip: true
+            equals.shift: [0.25kx, -0.625ky]
+      rows:
+        escape.row_net: col1 #P24
+        one.row_net: col2 #P23
+        two.row_net: col3 #P22
+        three.row_net: col4 #P21
+        four.row_net: col5 #P20
+        five.row_net: col6 #P40
+        six.row_net: col7 #P41
+        seven.row_net: col8 #P47
+        eight.row_net: col9 #P42
+        nine.row_net: col10 #P43
+        zero.row_net: col11 #P37
+        dash.row_net: col12 #P36
+        equals.row_net: col13 #P35
+        backspace.row_net: col14 #P34
+        special.row_net: col15 #P33
+outlines:
+  _keys:
+    - what: rectangle
+      where: [key]
+      size: [14, 14]
+      fillet: 0.5
+  _usb:
+    - what: rectangle
+      where: 
+        - ref: controller_parts_mcu
+          shift: [0, 21.5]
+      size: [13, 6]
+      fillet: 0.5
+  _usbcutout:
+    - what: rectangle
+      where:
+        - ref: controller_parts_mcu
+          shift: [0, 21.66]
+      size: [9.28, 6.64]
+  _leftsquare:
+    - what: rectangle
+      where: 
+        - ref: controller_parts_mcu
+          shift: [-7.35, 21.5]
+      size: [4, 4]
+  _leftcircle:
+    - what: circle
+      where: 
+        - ref: controller_parts_mcu
+          shift: [-10.35, 24.5]
+      radius: 4
+  _rightsquare:
+    - what: rectangle
+      where: 
+        - ref: controller_parts_mcu
+          shift: [7.35, 21.5]
+      size: [4, 4]
+  _rightcircle:
+    - what: circle
+      where: 
+        - ref: controller_parts_mcu
+          shift: [10.35, 24.5]
+      radius: 4
+  _leftsupport:
+    - _leftsquare
+    - -_leftcircle
+  _rightsupport:
+    - _rightsquare
+    - -_rightcircle
+  _border:
+    - what: polygon
+      points:
+        - ref: matrix_num_escape # Top Left
+          shift: [-0.5kx-casepadding, -0.5ky-casepadding]
+        - ref: matrix_top_special # Top Right
+          shift: [-1.25kx-0.5kx-casepadding, 0.5ky+casepadding]
+        - ref: matrix_mod_special # Bottom Right 
+          shift: [0.5kx+casepadding, 0.25ky+0.5ky+casepadding]
+        - ref: matrix_mod_equals # Left Arrow
+          shift: [0.5kx+casepadding, -0.25ky-0.5ky-casepadding+2]
+        - ref: matrix_mod_equals # Left Arrow Above
+          shift: [0.25kx+casepadding, -0.25ky-0.5ky-casepadding+2]
+        - ref: matrix_mod_escape # Bottom Right
+          shift: [0.5kx+casepadding, -0.125ky-0.5ky-casepadding]
+      fillet: 1
+  _combo:
+    - _border
+    - _usb
+    - _leftsupport
+    - _rightsupport
+    - -_usbcutout
+  _plate:
+    - _border
+    - -_keys
+pcbs:
+  crimes:
+    outlines:
+      main:
+        outline: _combo
+    footprints:
+    - what: ch559l
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        P25: row1
+        P45: row2
+        P30: row3
+        P17: row4
+        P16: row5
+        P24: col1
+        P23: col2
+        P22: col3
+        P21: col4
+        P20: col5
+        P40: col6
+        P47: col7
+        P42: col8
+        P43: col9
+        P37: col10
+        P36: col11
+        P35: col12
+        P34: col13
+        P31: col14
+        P44: col15
+        P51: DPLUSOUT
+        P50: DNEGOUT
+      adjust:
+        rotate: 270
+        shift: [0, 0]
+    - what: esd
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+      adjust:
+        rotate: 90
+        shift: [0, 11]
+    - what: smd805
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: V33
+        to: GND
+      adjust:
+        rotate: 180
+        shift: [8.25, -1]
+    - what: smd805
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: VBUS
+        to: GND
+      adjust:
+        rotate: 180
+        shift: [8.25, 1]
+    - what: usbcmid
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        DN1: DNEGIN
+        DN2: DNEGIN
+        DP1: DPLUSIN
+        DP2: DPLUSIN
+      adjust:
+        rotate: 0
+        shift: [0, 25]
+    - what: smd805
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: CC1
+        to: GND
+      adjust:
+        rotate: 180
+        shift: [-10.5, 18.5]
+    - what: smd805
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: CC2
+        to: GND
+      adjust:
+        rotate: 0
+        shift: [10.5, 18.5]
+    # Boot Button
+    - what: button
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: BOOT
+        to: GND
+      adjust:
+        rotate: 90
+        shift: [0, -22]
+    # Reset Button.
+    - what: button
+      where: controller_parts_mcu
+      params:
+        side: 'B'
+        from: RST
+        to: VBUS
+      adjust:
+        rotate: 180
+        shift: [15, 0]
+    # Standard 1u keys.
+    - what: choc
+      where: [u1]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: "{{colrow}}"
+      adjust:
+        rotate: -90
+        shift: [0, 0]
+    # 1.25u keys.
+    - what: choc-cfx-125u
+      where: [u125]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: "{{colrow}}"
+      adjust:
+        rotate: -90
+        shift: [0, 0]
+    # 1.75u keys.
+    - what: choc-cfx-175u
+      where: [u175]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: "{{colrow}}"
+      adjust:
+        rotate: -90
+        shift: [0, 0]
+    # Standard 2u keys.
+    - what: choc-cfx-2u
+      where: [u2]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: "{{colrow}}"
+      adjust:
+        rotate: -90
+        shift: [0, 0]
+    # 2u Stabs
+    - what: choc-stab-2u-cutout
+      where: [u2]
+      adjust:
+        rotate: 90
+    # Left 3u Space
+    - what: choc-cfx-3u
+      where: [u3left]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: mod_three
+        to: "{{column_net}}"
+      adjust:
+        rotate: 90
+        shift: [0, 0]
+    # Right 3u Space
+    - what: choc-cfx-3u
+      where: [u3right]
+      params:
+        keycaps: true
+        reverse: false
+        hotswap: true
+        from: "{{column_net}}"
+        to: mod_seven
+      adjust:
+        rotate: -90
+        shift: [0, 0]
+    # Through Hole or SMD Diodes
+    - what: diode-rear
+      where: [key]
+      params:
+        from: "{{colrow}}"
+        to: "{{row_net}}"
+      adjust:
+        rotate: -90
+        shift: [-5, 0]
+    # Through Hole or SMD Diodes
+    - what: diode
+      where: [rightspacediode]
+      params:
+        from: "{{colrow}}"
+        to: "{{row_net}}"
+      adjust:
+        rotate: -90
+        shift: [-5, -13.45]
+  switchplate:
+    outlines:
+      main:
+        outline: _plate
+    footprints:
+    - what: choc-stab-2u-cutout
+      where: [u2, u2rightspace]
+      adjust:
+        rotate: 90
+        shift: [0, 0]
