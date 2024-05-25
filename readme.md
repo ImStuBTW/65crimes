@@ -1,4 +1,4 @@
-# 65% Crimes
+# 65 Crimes
 
 ![A preview of the keyboard pcb.](./images/pcb.png)
 ![A preview of the keyboard switchplate.](./images/switchplate.png)
