@@ -199,26 +199,26 @@ pcbs:
       where: controller_parts_mcu
       params:
         side: 'B'
-        P25: row1
-        P45: row2
-        P30: row3
-        P17: row4
-        P16: row5
-        P24: col1
-        P23: col2
-        P22: col3
-        P21: col4
-        P20: col5
-        P40: col6
-        P47: col7
-        P42: col8
-        P43: col9
-        P37: col10
-        P36: col11
-        P35: col12
-        P34: col13
+        P27: row1
+        P14: row5
+        P15: row4
+        P16: row3
+        P17: row2
+        P26: col1
+        P25: col2
+        P24: col3
+        P23: col4
+        P22: col5
+        P21: col6
+        P20: col7
+        P37: col8
+        P36: col9
+        P35: col10
+        P34: col11
+        P33: col12
+        P32: col13
         P31: col14
-        P44: col15
+        P30: col15
         P51: DPLUSOUT
         P50: DNEGOUT
       adjust:
@@ -347,7 +347,7 @@ pcbs:
         rotate: -90
         shift: [0, 0]
     # 2u Stabs
-    - what: choc-stab-2u-cutout
+    - what: choc-stab-2u
       where: [u2]
       adjust:
         rotate: 90
@@ -375,7 +375,7 @@ pcbs:
       adjust:
         rotate: -90
         shift: [0, 0]
-    # Through Hole or SMD Diodes
+    # SMD Diodes
     - what: diode-rear
       where: [key]
       params:
@@ -384,15 +384,46 @@ pcbs:
       adjust:
         rotate: -90
         shift: [-5, 0]
-    # Through Hole or SMD Diodes
-    - what: diode
-      where: [rightspacediode]
-      params:
-        from: "{{colrow}}"
-        to: "{{row_net}}"
+    # Top Left Hole
+    - what: m2mountinghole
+      where: matrix_num_one
       adjust:
-        rotate: -90
-        shift: [-5, -13.45]
+        shift: [-3, 0.5ky]
+    # Top Middle Hole
+    - what: m2mountinghole
+      where: matrix_num_five
+      adjust:
+        shift: [-3, 0.5ky]
+    # Top Other Hole
+    - what: m2mountinghole
+      where: matrix_num_seven
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Left Hole
+    - what: m2mountinghole
+      where: matrix_mod_escape
+      adjust:
+        shift: [-0.5kx+3, 0.5ky+0.125kx-1]
+    # Bottom Middle Hole
+    - what: m2mountinghole
+      where: matrix_bottom_five
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Other Hole
+    - what: m2mountinghole
+      where: matrix_bottom_seven
+      adjust:
+        shift: [-3, 0.5ky]
+    # Top Right Hole
+    - what: m2mountinghole
+      where: matrix_num_dash
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Right Hole
+    - what: m2mountinghole
+      where: matrix_mod_backspace
+      adjust:
+        shift: [-3, 0.5ky]
   switchplate:
     outlines:
       main:

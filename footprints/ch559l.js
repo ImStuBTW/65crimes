@@ -30,7 +30,7 @@ module.exports = {
 
       P24: {type: 'net', value: 'P24'},
       P25: {type: 'net', value: 'P25'},
-      R26: {type: 'net', value: 'R26'},
+      P26: {type: 'net', value: 'P26'},
       P27: {type: 'net', value: 'P27'},
       P55: {type: 'net', value: 'P55'},
       P54: {type: 'net', value: 'P54'},
@@ -136,7 +136,7 @@ module.exports = {
         ${''/* third side */}
         (pad 25 smd roundrect (at 4.1625 2.75) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P24} (roundrect_rratio 0.25))
         (pad 26 smd roundrect (at 4.1625 2.25) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P25} (roundrect_rratio 0.25))
-        (pad 27 smd roundrect (at 4.1625 1.75) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.R26} (roundrect_rratio 0.25))
+        (pad 27 smd roundrect (at 4.1625 1.75) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P26} (roundrect_rratio 0.25))
         (pad 28 smd roundrect (at 4.1625 1.25) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P27} (roundrect_rratio 0.25))
         (pad 29 smd roundrect (at 4.1625 0.75) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P55} (roundrect_rratio 0.25))
         (pad 30 smd roundrect (at 4.1625 0.25) (size 1.475 0.3) (layers F.Cu F.Mask F.Paste) ${p.P54} (roundrect_rratio 0.25))
@@ -222,7 +222,7 @@ module.exports = {
         (pad 30 smd roundrect (at -4.1625 0.25 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P54} (roundrect_rratio 0.25))
         (pad 29 smd roundrect (at -4.1625 0.75 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P55} (roundrect_rratio 0.25))
         (pad 28 smd roundrect (at -4.1625 1.25 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P27} (roundrect_rratio 0.25))
-        (pad 27 smd roundrect (at -4.1625 1.75 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.R26} (roundrect_rratio 0.25))
+        (pad 27 smd roundrect (at -4.1625 1.75 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P26} (roundrect_rratio 0.25))
         (pad 26 smd roundrect (at -4.1625 2.25 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P25} (roundrect_rratio 0.25))
         (pad 25 smd roundrect (at -4.1625 2.75 ${p.rot}) (size 1.475 0.3) (layers B.Cu B.Mask B.Paste) ${p.P24} (roundrect_rratio 0.25))
 
