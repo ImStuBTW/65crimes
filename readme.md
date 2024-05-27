@@ -53,6 +53,7 @@ This keyboard is currently in the process of being fabbed. There's no guarantee 
 | 1N4148 T4 Diodes           | 67     | $2.00 USD   | https://www.aliexpress.us/item/2255800498728983.html |
 | Choc Switches              | 67     | $45.00 USD  | https://lowprokb.ca/collections/switches/products/kailh-choc-low-profile-switches |
 | Chocfox CFX Keycaps        | Alphas + Mods | $60.00 USD | https://chosfox.com/collections/low-profile-keycaps/products/chocfox-wob?variant=42753190461634 |
+| MBK Spacebars (Optional)   | 3      | $3.00 USD   | https://lowprokb.ca/collections/keycaps/products/mbk-low-profile-pbt-blank-keycaps?variant=44794533511332 |
 | 4mm M2 Screws              | 8      | $1.00 USD   | https://www.aliexpress.us/item/2255801062616407.html |
-| M2 Screw Inserts           | 8      | $1.50 USD  | https://www.aliexpress.us/item/3256804349544912.html |
-| Bumpons                    | 1 Pack | $10.00 USD | https://www.amazon.com/Adhesive-Bumper-106-PC-Spherical-Square/dp/B06XPCLN23/ |
+| M2 Screw Inserts           | 8      | $1.50 USD   | https://www.aliexpress.us/item/3256804349544912.html |
+| Bumpons                    | 1 Pack | $10.00 USD  | https://www.amazon.com/Adhesive-Bumper-106-PC-Spherical-Square/dp/B06XPCLN23/ |
