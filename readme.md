@@ -16,13 +16,14 @@ This is a 65% keyboard with the heart of a 40% keyboard. Nothing here is standar
 
 ## The PCB
 
-![A preview of the keyboard pcb.](./images/pcb.png)
+![A KiCAD preview of the keyboard pcb.](./images/pcb.png)
 
 This keyboard was also an excuse for me to experiment with the new FAK keyboard firmware and it's counterpart line of budget CH55X chips. I've never built a keyboard with an onboard microcontroller before, and these chips are supposed to be somewhat more hand-solderable than previous keys. They don't need a ton of support hardware, so hopefully I didn't mess up the writing too much. All of the pinouts and component choices are shamelessly copied from semickolon's [Partycrasher Micro](https://oshwlab.com/kkpjfobj/partycrasher-micro) microcontroller design.
 
 ## The Switch Plates
 
-![A preview of the keyboard switch plate.](./images/switchplate.png)
+![A KiCAD preview of the switch plate.](./images/switchplate.png)
+![A KiCAD preview of the stabilizer shim.](./images/shim.png)
 
 The 65 Crimes keyboard is also the first time I've designed anything with stabilizers. The keyboard's spacebar is split across three 2u keys. Choc stabilizers need a switch plate to function, so I designed an accompanying switch plate for this board. Unfortunately this is a somewhat large keyboard by split ergonomic board standards, so the extra switch plate is a little expensive to fabricate. I also included an experimental keyboard stabilizer "shim" that only snaps onto the bottom 3 spacebars and their surrounding modifier keys.
 
@@ -34,7 +35,7 @@ The `footprints` folder contains several custom footprints. Getting the spacing 
 
 ## The Build
 
-![A preview of the keyboard prototype.](./images/65crimesprototype.png)
+![A 3D printed keyboard prototype.](./images/65crimesprototype.png)
 
 This keyboard is currently in the process of being fabbed. There's no guarantee that any of this will work. Here's what it looks like on a 3D printed placeholder.
 
