@@ -1,9 +1,20 @@
+# 65 Crimes
+#
+# Ergogen *really* does not want to create row-staggered keyboards.
+# This config file rotates the entire keyboard 270 degrees so that
+# it can be treated as a very tall column-staggered keyboard.
+#
+# If you're interested in creating a row-staggered keyboard in
+# Ergogen, it may be worth checking out other projects such as
+# https://github.com/jeroen94704/klepcbgen or https://kb.xyz.is
 units:
+  # X and Y are flipped from the usual cx and cy spacing due to rotation.
   kx: 17
   ky: 18
   casepadding: 1.5
 points:
   zones:
+    # Zone for placing MCU. In hindsight I probably didn't need this.
     controller:
       anchor.shift: [320.25, -110.625]
       key:
@@ -13,45 +24,56 @@ points:
         parts:
           rows:
             mcu:
+    # Main Key Matrix
     matrix:
       anchor.shift: [100, 75]
+      # Keyboard is rotated so that Ergogen can treat it like a column staggered board.
       rotate: 270
       key:
         spread: 1kx
         padding: 1ky
-        tags: [key, u1]
+        tags: [key, u1] # All keys start with the standard key and u1 tag.
       columns:
+        # The Num row is given a goofy spacing to make it look like a function row.
+        # This is a bit of a novelty board.
         num:
-          key.column_net: row1 #P25
+          key.column_net: row1
           rows:
+            # Ergogen didn't like the repeating 0.33. More nasty exact numbers.
             one.shift: [0kx, 6] #0.33ky
             five.shift: [0kx, 6] #0.33ky
             nine.shift: [0kx, 6] #0.33ky
             backspace:
-              row_net: col15 #P33
+              row_net: col15
               shift: [0kx, 0.25ky]
             special.skip: true
         top:
-          key.column_net: row2 #P45
-          key.spread: 1.25kx
+          key.column_net: row2
+          key.spread: 1.25kx # Add 0.25kx between the top row and num row.
           rows:
-            special.shift: [0kx, 0.25ky]
+            special.shift: [0kx, 0.25ky] # Nudge the last key 0.25kx away.
         home:
-          key.column_net: row3 #P30
+          key.column_net: row3
           rows:
+            # Everything's rotated, so the 1.25u key is 1.25ky "tall".
+            # Keys need to be shifted to accomidate the extra spacing.
             escape:
               height: 1.25ky
               shift: [0kx, 0.125ky]
+              # The leading , keeps the "key" tag and overwrites the "u1".
               tags: [,u125]
             one.shift: [0kx, 0.125ky]
             equals.skip: true
+            # Same song and dance for a 1.75u key.
             backspace:
               height: 1.75ky
               shift: [0kx, -0.625ky]
+              # The leading , keeps the "key" tag and overwrites the "u1".
               tags: [,u175]
             special.shift: [0kx, 0.625ky]
+        # Nothing new here.
         bottom:
-          key.column_net: row4 #P17
+          key.column_net: row4
           rows:
             escape:
               height: 1.75ky
@@ -65,29 +87,31 @@ points:
             backspace.shift: [0.25kx, 0.25ky]
             special.shift: [-0.25kx, 0.25ky]
         mod:
-          key.column_net: row5 #P16
+          key.column_net: row5
           rows:
             escape:
               height: 1.25ky
               shift: [0kx, 0.125ky]
               tags: [,u125]
             one.shift: [0kx, 0.125ky]
+            # Tag used for stab support shim.
+            # The leading ,, leave the other tags alone.
             two:
               tags: [,,stabsupport]
             three:
               height: 2ky
               shift: [0kx, 0.5ky]
-              tags: [,u2]
+              tags: [,u2,stabsupport]
             four.skip: true
             five:
               height: 2ky
               shift: [0kx, 0ky]
-              tags: [,u2]
+              tags: [,u2,stabsupport]
             six.skip: true
             seven:
               height: 2ky
               shift: [0kx, 0ky]
-              tags: [,u2]
+              tags: [,u2,stabsupport]
             eight.skip: true
             nine:
               height: 1.25ky
@@ -100,27 +124,29 @@ points:
             dash.skip: true
             equals.shift: [0.25kx, -0.625ky]
       rows:
-        escape.row_net: col1 #P24
-        one.row_net: col2 #P23
-        two.row_net: col3 #P22
-        three.row_net: col4 #P21
-        four.row_net: col5 #P20
-        five.row_net: col6 #P40
-        six.row_net: col7 #P41
-        seven.row_net: col8 #P47
-        eight.row_net: col9 #P42
-        nine.row_net: col10 #P43
-        zero.row_net: col11 #P37
-        dash.row_net: col12 #P36
-        equals.row_net: col13 #P35
-        backspace.row_net: col14 #P34
-        special.row_net: col15 #P33
+        escape.row_net: col1
+        one.row_net: col2
+        two.row_net: col3
+        three.row_net: col4
+        four.row_net: col5
+        five.row_net: col6
+        six.row_net: col7
+        seven.row_net: col8
+        eight.row_net: col9
+        nine.row_net: col10
+        zero.row_net: col11
+        dash.row_net: col12
+        equals.row_net: col13
+        backspace.row_net: col14
+        special.row_net: col15
 outlines:
+  # Outline for every key switch.
   _keys:
     - what: rectangle
       where: [key]
       size: [14, 14]
       fillet: 0.5
+  # Extra nubbin' for USB port.
   _usb:
     - what: rectangle
       where: 
@@ -128,12 +154,15 @@ outlines:
           shift: [0, 21.5]
       size: [13, 6]
       fillet: 0.5
+  # USB cutout for mid-mount.
   _usbcutout:
     - what: rectangle
       where:
         - ref: controller_parts_mcu
           shift: [0, 21.66]
       size: [9.28, 6.64]
+  # A series of odd manual hack jobs to get a rounded support
+  # on the side of the nubbin'.
   _leftsquare:
     - what: rectangle
       where: 
@@ -158,6 +187,7 @@ outlines:
         - ref: controller_parts_mcu
           shift: [10.35, 24.5]
       radius: 4
+  # The final left and right supports.
   _leftsupport:
     - _leftsquare
     - -_leftcircle
@@ -180,21 +210,49 @@ outlines:
         - ref: matrix_mod_escape # Bottom Right
           shift: [0.5kx+casepadding, -0.125ky-0.5ky-casepadding]
       fillet: 1
+  # The outline for the keyboard PCB.
   _combo:
     - _border
     - _usb
     - _leftsupport
     - _rightsupport
     - -_usbcutout
+  # Full switch plate outline.
   _plate:
     - _border
     - -_keys
+  # Stabilizer shim for just the spacebars.
+  _stabshim:
+    - what: polygon
+      points:
+        - ref: matrix_mod_two
+          shift: [-9.15, -8.5]
+        - ref: matrix_mod_two
+          shift: [9.15, -8.5]
+        - ref: matrix_mod_nine
+          shift: [9.15,8.5]
+        - ref: matrix_mod_nine
+          shift: [-9.15, 8.5]
+      fillet: 1
+  _stabcutouts:
+    - what: rectangle
+      where: [stabsupport]
+      size: [14,14]
+      fillet: 0.5
+  _stabsupport:
+    - _stabshim
+    - -_stabcutouts
 pcbs:
+  # Main PCB. Ergogen doesn't let you start PCBs with numbers.
+  # All MCU components are mounted on the back.
+  # CH559L circuit based off the Partycrasher Micro design
+  # by Semickolon https://oshwlab.com/kkpjfobj/partycrasher-micro
   crimes:
     outlines:
       main:
         outline: _combo
     footprints:
+    # MCU
     - what: ch559l
       where: controller_parts_mcu
       params:
@@ -224,6 +282,7 @@ pcbs:
       adjust:
         rotate: 270
         shift: [0, 0]
+    # ESD Protection
     - what: esd
       where: controller_parts_mcu
       params:
@@ -231,6 +290,7 @@ pcbs:
       adjust:
         rotate: 90
         shift: [0, 11]
+    # 3.3uf Cap
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -239,7 +299,8 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.25, -1]
+        shift: [8.75, -1]
+    # 100nf Cap
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -248,7 +309,8 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.25, 1]
+        shift: [8.75, 1]
+    # Mid-Mount USB-C Port
     - what: usbcmid
       where: controller_parts_mcu
       params:
@@ -260,6 +322,7 @@ pcbs:
       adjust:
         rotate: 0
         shift: [0, 25]
+    # 5.1K Resistor
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -269,6 +332,7 @@ pcbs:
       adjust:
         rotate: 180
         shift: [-10.5, 18.5]
+    # 5.1K Resistor
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -297,7 +361,7 @@ pcbs:
         to: VBUS
       adjust:
         rotate: 180
-        shift: [15, 0]
+        shift: [16, 0]
     # Standard 1u keys.
     - what: choc
       where: [u1]
@@ -334,7 +398,7 @@ pcbs:
       adjust:
         rotate: -90
         shift: [0, 0]
-    # Standard 2u keys.
+    # Standard 2u Keys
     - what: choc-cfx-2u
       where: [u2]
       params:
@@ -346,35 +410,11 @@ pcbs:
       adjust:
         rotate: -90
         shift: [0, 0]
-    # 2u Stabs
+    # 2u PCB Stabs
     - what: choc-stab-2u
       where: [u2]
       adjust:
         rotate: 90
-    # Left 3u Space
-    - what: choc-cfx-3u
-      where: [u3left]
-      params:
-        keycaps: true
-        reverse: false
-        hotswap: true
-        from: mod_three
-        to: "{{column_net}}"
-      adjust:
-        rotate: 90
-        shift: [0, 0]
-    # Right 3u Space
-    - what: choc-cfx-3u
-      where: [u3right]
-      params:
-        keycaps: true
-        reverse: false
-        hotswap: true
-        from: "{{column_net}}"
-        to: mod_seven
-      adjust:
-        rotate: -90
-        shift: [0, 0]
     # SMD Diodes
     - what: diode-rear
       where: [key]
@@ -424,6 +464,7 @@ pcbs:
       where: matrix_mod_backspace
       adjust:
         shift: [-3, 0.5ky]
+  # Standward Switchplate
   switchplate:
     outlines:
       main:
@@ -431,6 +472,57 @@ pcbs:
     footprints:
     - what: choc-stab-2u-cutout
       where: [u2, u2rightspace]
+      adjust:
+        rotate: 90
+        shift: [0, 0]
+    # Top Left Hole
+    - what: m2mountinghole
+      where: matrix_num_one
+      adjust:
+        shift: [-3, 0.5ky]
+    # Top Middle Hole
+    - what: m2mountinghole
+      where: matrix_num_five
+      adjust:
+        shift: [-3, 0.5ky]
+    # Top Other Hole
+    - what: m2mountinghole
+      where: matrix_num_seven
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Left Hole
+    - what: m2mountinghole
+      where: matrix_mod_escape
+      adjust:
+        shift: [-0.5kx+3, 0.5ky+0.125kx-1]
+    # Bottom Middle Hole
+    - what: m2mountinghole
+      where: matrix_bottom_five
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Other Hole
+    - what: m2mountinghole
+      where: matrix_bottom_seven
+      adjust:
+        shift: [-3, 0.5ky]
+    # Top Right Hole
+    - what: m2mountinghole
+      where: matrix_num_dash
+      adjust:
+        shift: [-3, 0.5ky]
+    # Bottom Right Hole
+    - what: m2mountinghole
+      where: matrix_mod_backspace
+      adjust:
+        shift: [-3, 0.5ky]
+  # Smaller switch plate that only covers the spacebars and adjacent modifier keys.
+  u2supportshim:
+    outlines:
+      main:
+        outline: _stabsupport
+    footprints:
+    - what: choc-stab-2u-cutout
+      where: [u2]
       adjust:
         rotate: 90
         shift: [0, 0]
