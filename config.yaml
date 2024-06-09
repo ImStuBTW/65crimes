@@ -11,7 +11,10 @@ units:
   # X and Y are flipped from the usual cx and cy spacing due to rotation.
   kx: 17
   ky: 18
-  casepadding: 1.5
+  pcbpadding: 0
+  caseinnerpadding: 1
+  casepadding: 5
+  insert: 2.5 # M2 heat set insert diameter.
 points:
   zones:
     # Zone for placing MCU. In hindsight I probably didn't need this.
@@ -32,25 +35,37 @@ points:
       key:
         spread: 1kx
         padding: 1ky
-        tags: [key, u1] # All keys start with the standard key and u1 tag.
+        tags: [key, diode, u1] # All keys start with the standard key and u1 tag.
       columns:
         # The Num row is given a goofy spacing to make it look like a function row.
         # This is a bit of a novelty board.
         num:
           key.column_net: row1
           rows:
-            # Ergogen didn't like the repeating 0.33. More nasty exact numbers.
-            one.shift: [0kx, 6] #0.33ky
-            five.shift: [0kx, 6] #0.33ky
-            nine.shift: [0kx, 6] #0.33ky
+            escape:
+              rotate: 180
+              tags: [,dioderotate]
+            one:
+              rotate: 180
+              shift: [0kx, -2ky-6]
+            five.shift: [0kx, 6]
+            nine.shift: [0kx, 6]
+            equals.tags: [, diodenudge]
             backspace:
               row_net: col15
               shift: [0kx, 0.25ky]
+              tags: [, diodenudge]
             special.skip: true
         top:
           key.column_net: row2
           key.spread: 1.25kx # Add 0.25kx between the top row and num row.
           rows:
+            escape:
+              rotate: 180
+              tags: [,dioderotate]
+            one:
+              rotate: 180
+              shift: [0kx, -2ky]
             special.shift: [0kx, 0.25ky] # Nudge the last key 0.25kx away.
         home:
           key.column_net: row3
@@ -58,28 +73,34 @@ points:
             # Everything's rotated, so the 1.25u key is 1.25ky "tall".
             # Keys need to be shifted to accomidate the extra spacing.
             escape:
+              rotate: 180
               height: 1.25ky
               shift: [0kx, 0.125ky]
-              # The leading , keeps the "key" tag and overwrites the "u1".
-              tags: [,u125]
-            one.shift: [0kx, 0.125ky]
+              # The leading ,, keeps the "key" tag and overwrites the "u1".
+              tags: [,dioderotate,u125]
+            one:
+              rotate: 180
+              shift: [0kx, -2ky-0.125ky]
             equals.skip: true
             # Same song and dance for a 1.75u key.
             backspace:
               height: 1.75ky
               shift: [0kx, -0.625ky]
-              # The leading , keeps the "key" tag and overwrites the "u1".
-              tags: [,u175]
+              # The leading ,, keeps the "key" tag and overwrites the "u1".
+              tags: [,,u175]
             special.shift: [0kx, 0.625ky]
         # Nothing new here.
         bottom:
           key.column_net: row4
           rows:
             escape:
+              rotate: 180
               height: 1.75ky
               shift: [0kx, 0.375ky]
-              tags: [,u175]
-            one.shift: [0kx, 0.375ky]
+              tags: [,dioderotate,u175]
+            one:
+              rotate: 180
+              shift: [0kx, -2ky-0.375ky]
             dash.skip: true
             equals:
               height: 1ky
@@ -90,37 +111,40 @@ points:
           key.column_net: row5
           rows:
             escape:
+              rotate: 180
               height: 1.25ky
               shift: [0kx, 0.125ky]
-              tags: [,u125]
-            one.shift: [0kx, 0.125ky]
+              tags: [,dioderotate,u125]
+            one:
+              rotate: 180
+              shift: [0kx, -2.125ky]
             # Tag used for stab support shim.
-            # The leading ,, leave the other tags alone.
+            # The leading ,,, leave the other tags alone.
             two:
-              tags: [,,stabsupport]
+              tags: [,,,stabsupport]
             three:
               height: 2ky
               shift: [0kx, 0.5ky]
-              tags: [,u2,stabsupport]
+              tags: [,,u2,stabsupport]
             four.skip: true
             five:
               height: 2ky
               shift: [0kx, 0ky]
-              tags: [,u2,stabsupport]
+              tags: [,,u2,stabsupport]
             six.skip: true
             seven:
               height: 2ky
               shift: [0kx, 0ky]
-              tags: [,u2,stabsupport]
+              tags: [,,u2,stabsupport]
             eight.skip: true
             nine:
               height: 1.25ky
               shift: [0kx, -0.375ky]
-              tags: [,u125, stabsupport]
+              tags: [,,u125, stabsupport]
             zero:
               height: 1.25ky
               shift: [0kx, 0.25ky]
-              tags: [,u125]
+              tags: [,,u125]
             dash.skip: true
             equals.shift: [0.25kx, -0.625ky]
       rows:
@@ -152,8 +176,8 @@ outlines:
       where: 
         - ref: controller_parts_mcu
           shift: [0, 21.5]
-      size: [13, 6]
-      fillet: 0.5
+      size: [13.25, 6]
+      fillet: 1
   # USB cutout for mid-mount.
   _usbcutout:
     - what: rectangle
@@ -161,31 +185,29 @@ outlines:
         - ref: controller_parts_mcu
           shift: [0, 21.66]
       size: [9.28, 6.64]
-  # A series of odd manual hack jobs to get a rounded support
-  # on the side of the nubbin'.
   _leftsquare:
     - what: rectangle
       where: 
         - ref: controller_parts_mcu
-          shift: [-7.35, 21.5]
-      size: [4, 4]
+          shift: [-7.5, 19.75]
+      size: [3, 5.5]
   _leftcircle:
     - what: circle
       where: 
         - ref: controller_parts_mcu
-          shift: [-10.35, 24.5]
+          shift: [-10.5, 22.75]
       radius: 4
   _rightsquare:
     - what: rectangle
       where: 
         - ref: controller_parts_mcu
-          shift: [7.35, 21.5]
-      size: [4, 4]
+          shift: [7.5, 19.75]
+      size: [3, 5.5]
   _rightcircle:
     - what: circle
       where: 
         - ref: controller_parts_mcu
-          shift: [10.35, 24.5]
+          shift: [10.5, 22.75]
       radius: 4
   # The final left and right supports.
   _leftsupport:
@@ -198,17 +220,17 @@ outlines:
     - what: polygon
       points:
         - ref: matrix_num_escape # Top Left
-          shift: [-0.5kx-casepadding, -0.5ky-casepadding]
+          shift: [0.5kx-pcbpadding, 0.5ky-pcbpadding]
         - ref: matrix_top_special # Top Right
-          shift: [-1.25kx-0.5kx-casepadding, 0.5ky+casepadding]
+          shift: [-1.25kx-0.5kx-pcbpadding, 0.5ky+pcbpadding]
         - ref: matrix_mod_special # Bottom Right 
-          shift: [0.5kx+casepadding, 0.25ky+0.5ky+casepadding]
+          shift: [0.5kx+pcbpadding, 0.25ky+0.5ky+pcbpadding]
         - ref: matrix_mod_equals # Left Arrow
-          shift: [0.5kx+casepadding, -0.25ky-0.5ky-casepadding+2]
+          shift: [0.5kx+pcbpadding, -0.25ky-0.5ky-pcbpadding+2]
         - ref: matrix_mod_equals # Left Arrow Above
-          shift: [0.25kx+casepadding, -0.25ky-0.5ky-casepadding+2]
-        - ref: matrix_mod_escape # Bottom Right
-          shift: [0.5kx+casepadding, -0.125ky-0.5ky-casepadding]
+          shift: [0.25kx+pcbpadding, -0.25ky-0.5ky-pcbpadding+2]
+        - ref: matrix_mod_escape # Bottom Left
+          shift: [-0.5kx+pcbpadding, 0.125ky+0.5ky-pcbpadding]
       fillet: 1
   # The outline for the keyboard PCB.
   _combo:
@@ -242,6 +264,102 @@ outlines:
   _stabsupport:
     - _stabshim
     - -_stabcutouts
+  # Case outlines
+  _toplefthole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_num_one
+        shift: [-4, 0.5ky]
+  _topmiddlehole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_num_five
+        shift: [-4, 0.5ky]
+  _topotherhole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_num_seven
+        shift: [-4, 0.5ky]
+  _bottomlefthole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_bottom_escape
+        shift: [-0.5kx+4, 0.5ky+0.125kx]
+  _bottommiddlehole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_bottom_five
+        shift: [-4, 0.5ky]
+  _bottomotherhole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_bottom_seven
+        shift: [-4, 0.5ky]
+  _toprighthole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_num_dash
+        shift: [-4, 0.5ky]
+  _bottomrighthole:
+    - what: circle
+      radius: insert
+      where:
+        ref: matrix_mod_backspace
+        shift: [-4, 0.5ky]
+
+  case_inner_border:
+    - what: polygon
+      points:
+        - ref: matrix_num_escape # Top Left
+          shift: [0.5kx+caseinnerpadding, 0.5ky+caseinnerpadding]
+        - ref: matrix_top_special # Top Right
+          shift: [-1.25kx-0.5kx-caseinnerpadding, 0.5ky+caseinnerpadding]
+        - ref: matrix_mod_special # Bottom Right 
+          shift: [0.5kx+caseinnerpadding, 0.25ky+0.5ky+caseinnerpadding]
+        - ref: matrix_mod_equals # Left Arrow
+          shift: [0.5kx+caseinnerpadding, -0.25ky-0.5ky-caseinnerpadding+2]
+        - ref: matrix_mod_equals # Left Arrow Above
+          shift: [0.25kx+caseinnerpadding, -0.25ky-0.5ky-caseinnerpadding+2]
+        - ref: matrix_mod_escape # Bottom Left
+          shift: [-0.5kx-caseinnerpadding, 0.125ky+0.5ky+caseinnerpadding]
+      fillet: 1
+  case_pcb:
+    - case_inner_border
+    - _usb
+    - _leftsupport
+    - _rightsupport
+    - -_usbcutout
+    - -_toplefthole
+    - -_topmiddlehole
+    - -_topotherhole
+    - -_bottomlefthole
+    - -_bottommiddlehole
+    - -_bottomotherhole
+    - -_toprighthole
+    - -_bottomrighthole
+  case_outline:
+    - what: polygon
+      points:
+        - ref: matrix_num_escape # Top Left
+          shift: [0.5kx+casepadding, 0.5ky+casepadding]
+        - ref: matrix_top_special # Top Right
+          shift: [-1.25kx-0.5kx-casepadding, 0.5ky+casepadding]
+        - ref: matrix_mod_special # Bottom Right 
+          shift: [0.5kx+casepadding, 0.25ky+0.5ky+casepadding]
+        - ref: matrix_mod_equals # Left Arrow
+          shift: [0.5kx+casepadding, -0.25ky-0.5ky-casepadding+2]
+        - ref: matrix_mod_equals # Left Arrow Above
+          shift: [0.25kx+casepadding, -0.25ky-0.5ky-casepadding+2]
+        - ref: matrix_mod_escape # Bottom Left
+          shift: [-0.5kx-casepadding, 0.125ky+0.5ky+casepadding]
+      fillet: 1
 pcbs:
   # Main PCB. Ergogen doesn't let you start PCBs with numbers.
   # All MCU components are mounted on the back.
@@ -257,30 +375,30 @@ pcbs:
       where: controller_parts_mcu
       params:
         side: 'B'
-        P27: row1
-        P14: row5
-        P15: row4
-        P16: row3
-        P17: row2
-        P26: col1
-        P25: col2
-        P24: col3
-        P23: col4
-        P22: col5
+        P33: row1
+        P03: row2
+        P02: row3
+        P01: row4
+        P00: row5
+        P34: col1
+        P35: col2
+        P36: col3
+        P37: col4
+        P20: col5
         P21: col6
-        P20: col7
-        P37: col8
-        P36: col9
-        P35: col10
-        P34: col11
-        P33: col12
-        P32: col13
-        P31: col14
-        P30: col15
+        P22: col7
+        P23: col8
+        P24: col9
+        P25: col10
+        P26: col11
+        P27: col12
+        P07: col13
+        P06: col14
+        P05: col15
         P51: DPLUSOUT
         P50: DNEGOUT
       adjust:
-        rotate: 270
+        rotate: 90
         shift: [0, 0]
     # ESD Protection
     - what: esd
@@ -299,7 +417,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.75, -1]
+        shift: [8.5, 1.25]
     # 100nf Cap
     - what: smd805
       where: controller_parts_mcu
@@ -309,7 +427,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.75, 1]
+        shift: [8.5, -1.25]
     # Mid-Mount USB-C Port
     - what: usbcmid
       where: controller_parts_mcu
@@ -331,7 +449,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [-10.5, 18.5]
+        shift: [-11.25, 17]
     # 5.1K Resistor
     - what: smd805
       where: controller_parts_mcu
@@ -341,7 +459,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 0
-        shift: [10.5, 18.5]
+        shift: [11.25, 17]
     # Boot Button
     - what: button
       where: controller_parts_mcu
@@ -360,7 +478,7 @@ pcbs:
         from: RST
         to: VBUS
       adjust:
-        rotate: 180
+        rotate: 0
         shift: [16, 0]
     # Standard 1u keys.
     - what: choc
@@ -417,54 +535,72 @@ pcbs:
         rotate: 90
     # SMD Diodes
     - what: diode-rear
-      where: [key]
+      where: [diode]
       params:
         from: "{{colrow}}"
         to: "{{row_net}}"
       adjust:
         rotate: -90
         shift: [-5, 0]
+    # SMD Diodes (Rotated)
+    - what: diode-rear
+      where: [dioderotate]
+      params:
+        from: "{{colrow}}"
+        to: "{{row_net}}"
+      adjust:
+        rotate: 90
+        shift: [-5, 0]
+    # SMD Diodes (Nudged)
+    - what: diode-rear
+      where: [diodenudge]
+      params:
+        from: "{{colrow}}"
+        to: "{{row_net}}"
+      adjust:
+        rotate: -90
+        shift: [-3.5, 0]
     # Top Left Hole
     - what: m2mountinghole
       where: matrix_num_one
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Middle Hole
     - what: m2mountinghole
       where: matrix_num_five
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Other Hole
     - what: m2mountinghole
       where: matrix_num_seven
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Left Hole
     - what: m2mountinghole
-      where: matrix_mod_escape
+      where: matrix_bottom_escape
       adjust:
-        shift: [-0.5kx+3, 0.5ky+0.125kx-1]
+        shift: [-0.5kx+4, 0.5ky+0.125kx]
     # Bottom Middle Hole
     - what: m2mountinghole
       where: matrix_bottom_five
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Other Hole
     - what: m2mountinghole
       where: matrix_bottom_seven
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Right Hole
     - what: m2mountinghole
       where: matrix_num_dash
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Right Hole
     - what: m2mountinghole
       where: matrix_mod_backspace
       adjust:
-        shift: [-3, 0.5ky]
-  # Standward Switchplate
+        shift: [-4, 0.5ky]
+  # Standard Switchplate
   switchplate:
     outlines:
       main:
@@ -479,42 +615,42 @@ pcbs:
     - what: m2mountinghole
       where: matrix_num_one
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Middle Hole
     - what: m2mountinghole
       where: matrix_num_five
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Other Hole
     - what: m2mountinghole
       where: matrix_num_seven
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Left Hole
     - what: m2mountinghole
-      where: matrix_mod_escape
+      where: matrix_bottom_escape
       adjust:
-        shift: [-0.5kx+3, 0.5ky+0.125kx-1]
+        shift: [-0.5kx+4, 0.5ky+0.125kx]
     # Bottom Middle Hole
     - what: m2mountinghole
       where: matrix_bottom_five
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Other Hole
     - what: m2mountinghole
       where: matrix_bottom_seven
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Top Right Hole
     - what: m2mountinghole
       where: matrix_num_dash
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
     # Bottom Right Hole
     - what: m2mountinghole
       where: matrix_mod_backspace
       adjust:
-        shift: [-3, 0.5ky]
+        shift: [-4, 0.5ky]
   # Smaller switch plate that only covers the spacebars and adjacent modifier keys.
   u2supportshim:
     outlines:
