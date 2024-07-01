@@ -6,7 +6,7 @@
 #
 # If you're interested in creating a row-staggered keyboard in
 # Ergogen, it may be worth checking out other projects such as
-# https://github.com/jeroen94704/klepcbgen or https://kb.xyz.is
+# https:#github.com/jeroen94704/klepcbgen or https:#kb.xyz.is
 units:
   # X and Y are flipped from the usual cx and cy spacing due to rotation.
   kx: 17
@@ -364,7 +364,7 @@ pcbs:
   # Main PCB. Ergogen doesn't let you start PCBs with numbers.
   # All MCU components are mounted on the back.
   # CH559L circuit based off the Partycrasher Micro design
-  # by Semickolon https://oshwlab.com/kkpjfobj/partycrasher-micro
+  # by Semickolon https:#oshwlab.com/kkpjfobj/partycrasher-micro
   crimes:
     outlines:
       main:
@@ -375,31 +375,31 @@ pcbs:
       where: controller_parts_mcu
       params:
         side: 'B'
-        P33: row1
-        P03: row2
-        P02: row3
-        P01: row4
-        P00: row5
-        P34: col1
-        P35: col2
-        P36: col3
-        P37: col4
-        P20: col5
-        P21: col6
-        P22: col7
-        P23: col8
-        P24: col9
-        P25: col10
-        P26: col11
-        P27: col12
-        P07: col13
-        P06: col14
-        P05: col15
+        P15: row5  # Pin 48
+        P16: row4  # Pin  1
+        P17: row3  # Pin  2
+        P30: row2  # Pin  4
+        P27: row1  # Pin 28
+        P04: col15 # Pin 36
+        P31: col14 # Pin  7
+        P32: col13 # Pin  8
+        P33: col12 # Pin  9
+        P34: col11 # Pin 10
+        P35: col10 # Pin 11
+        P36: col9  # Pin 12
+        P37: col8  # Pin 13
+        P20: col7  # Pin 21
+        P21: col6  # Pin 22
+        P22: col5  # Pin 23
+        P23: col4  # Pin 24
+        P24: col3  # Pin 25
+        P25: col2  # Pin 26
+        P26: col1  # Pin 27
         P51: DPLUSOUT
         P50: DNEGOUT
       adjust:
         rotate: 90
-        shift: [0, 0]
+        shift: [0, -0.5]
     # ESD Protection
     - what: esd
       where: controller_parts_mcu
@@ -407,7 +407,7 @@ pcbs:
         side: 'B'
       adjust:
         rotate: 90
-        shift: [0, 11]
+        shift: [0, 11.5]
     # 3.3uf Cap
     - what: smd805
       where: controller_parts_mcu
@@ -417,7 +417,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.5, 1.25]
+        shift: [8.5, -2]
     # 100nf Cap
     - what: smd805
       where: controller_parts_mcu
@@ -427,7 +427,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [8.5, -1.25]
+        shift: [8.5, 1.5]
     # Mid-Mount USB-C Port
     - what: usbcmid
       where: controller_parts_mcu
@@ -449,7 +449,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 180
-        shift: [-11.25, 17]
+        shift: [-9.75, 17]
     # 5.1K Resistor
     - what: smd805
       where: controller_parts_mcu
@@ -459,7 +459,7 @@ pcbs:
         to: GND
       adjust:
         rotate: 0
-        shift: [11.25, 17]
+        shift: [9.75, 17]
     # Boot Button
     - what: button
       where: controller_parts_mcu
@@ -478,8 +478,8 @@ pcbs:
         from: RST
         to: VBUS
       adjust:
-        rotate: 0
-        shift: [16, 0]
+        rotate: 180
+        shift: [15.75, -0.5]
     # Standard 1u keys.
     - what: choc
       where: [u1]

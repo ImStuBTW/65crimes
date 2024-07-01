@@ -10,10 +10,10 @@ let { CH559L, .. } = import "fak/mcus.ncl" in
   },
   matrix = {
     # Net:  col1, col2, col3, col4, col5, col6, col7, col8, col9, col10, col11, col12, col13, col14, col15
-    cols = [34,   35,   36,   37,   20,   21,   22,   23,   24,   25,    26,    27,    07,    06,    05],
+    cols = [26,   25,   24,   23,   22,   21,   20,   37,   36,   35,    34,    33,    32,    31,    04],
 
     # Net:  row1, row2, row3, row4, row5
-    rows = [33,   03,   02,   01,   00]
+    rows = [27,   30,   17,   16,   15]
   },
   keys =
     let M = ColToRowKey in
