@@ -18,7 +18,7 @@ This is a 65% keyboard with the heart of a 40% keyboard. Nothing here is standar
 
 ![A KiCAD preview of the keyboard pcb.](./images/pcb.png)
 
-This keyboard was also an excuse for me to experiment with the new FAK keyboard firmware and it's counterpart line of budget CH55X chips. I've never built a keyboard with an onboard microcontroller before, and these chips are supposed to be somewhat more hand-solderable than previous keys. They don't need a ton of support hardware, so hopefully I didn't mess up the writing too much. All of the pinouts and component choices are shamelessly copied from semickolon's [Partycrasher Micro](https://oshwlab.com/kkpjfobj/partycrasher-micro) microcontroller design.
+This keyboard was also an excuse for me to experiment with the new [FAK keyboard firmware](https://github.com/semickolon/fak) and it's counterpart line of budget CH55X chips. I've never built a keyboard with an onboard microcontroller before, and these chips are supposed to be somewhat more hand-solderable than previous keys. They don't need a ton of support hardware, so hopefully I didn't mess up the writing too much. All of the pinouts and component choices are shamelessly copied from semickolon's [Partycrasher Micro](https://oshwlab.com/kkpjfobj/partycrasher-micro) microcontroller design.
 
 ## The Switch Plates
 
