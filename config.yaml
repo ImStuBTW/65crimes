@@ -1,23 +1,28 @@
 # 65 Crimes
 #
 # Ergogen *really* does not want to create row-staggered keyboards.
-# This config file rotates the entire keyboard 270 degrees so that
-# it can be treated as a very tall column-staggered keyboard.
+# This config file rotates the entire keyboard 270 degrees as a
+# workaround so that it can be treated as a very tall column
+# staggered keyboard.
 #
-# If you're interested in creating a row-staggered keyboard in
-# Ergogen, it may be worth checking out other projects such as
-# https:#github.com/jeroen94704/klepcbgen or https:#kb.xyz.is
+# This technically works, but it's not the most beginner friendly
+# approach. If you're interested in creating a row-staggered
+# keyboard in, it may be worth checking out other projects such as
+# https://github.com/jeroen94704/klepcbgen or https://kb.xyz.is
+#
 units:
   # X and Y are flipped from the usual cx and cy spacing due to rotation.
   kx: 17
   ky: 18
+  # Case Variables
   pcbpadding: 0
   caseinnerpadding: 1
   casepadding: 5
   insert: 2.5 # M2 heat set insert diameter.
 points:
   zones:
-    # Zone for placing MCU. In hindsight I probably didn't need this.
+    # Zone for placing MCU. This was a late addition to the layout and a litle hacky.
+    # In hindsigh this could probably be done more clearly just using matrix refs.
     controller:
       anchor.shift: [320.25, -110.625]
       key:
@@ -35,14 +40,27 @@ points:
       key:
         spread: 1kx
         padding: 1ky
-        tags: [key, diode, u1] # All keys start with the standard key and u1 tag.
+        # Tags are used to treat the non-standard keys differently when defining the PCB.
+        # This key.tags default defines everything as a standard u1 unless it's overriden.
+        tags: [key, diode, u1]
+      # Since this keyboard is rotated on its side, the "columns" are technically the rows.
+      # Each "Column" has is given a row net definition.
+      # One artifact of this approach is that the diodes are backwards.
+      # I didn't discover this until the keyboard had been fabbed.
+      # Thankfully FAK and other keyboard firmwares allow you to indicate if your matrix is
+      # "ColToRow" or "RowToCol". But you may want to make different accomidations depending
+      # on the needs of your keyboard.
       columns:
         # The Num row is given a goofy spacing to make it look like a function row.
-        # This is a bit of a novelty board.
+        # This is for pure novelty. You can drop the shifts if you're making a standard 65%.
         num:
           key.column_net: row1
           rows:
             escape:
+              # The first key in every row is rotated 180 degrees so that its hotswap socket
+              # pad does not clip off the edge of the keyboard. The new "dioderotate" tag
+              # is used to flip the diodes around to keep the same direction as the rest
+              # of the diodes on the keyboard.
               rotate: 180
               tags: [,dioderotate]
             one:
@@ -56,6 +74,7 @@ points:
               shift: [0kx, 0.25ky]
               tags: [, diodenudge]
             special.skip: true
+        # The Top row does not have anything special going on.
         top:
           key.column_net: row2
           key.spread: 1.25kx # Add 0.25kx between the top row and num row.
@@ -67,6 +86,7 @@ points:
               rotate: 180
               shift: [0kx, -2ky]
             special.shift: [0kx, 0.25ky] # Nudge the last key 0.25kx away.
+        # Likewise, the Home row is fairly straightforward.
         home:
           key.column_net: row3
           rows:
@@ -107,6 +127,9 @@ points:
               shift: [0kx, -1ky]
             backspace.shift: [0.25kx, 0.25ky]
             special.shift: [-0.25kx, 0.25ky]
+        # The modifier row has three 2u wide spacebar keys.
+        # Theese keys have specific tags to specify they're framed by stabs.
+        # Choc stabalizers need a PCB-specific and switch plate-specific cutout.
         mod:
           key.column_net: row5
           rows:
@@ -118,7 +141,7 @@ points:
             one:
               rotate: 180
               shift: [0kx, -2.125ky]
-            # Tag used for stab support shim.
+            # Tag used for stab support switch plate.
             # The leading ,,, leave the other tags alone.
             two:
               tags: [,,,stabsupport]
@@ -147,6 +170,7 @@ points:
               tags: [,,u125]
             dash.skip: true
             equals.shift: [0.25kx, -0.625ky]
+      # "Row" definition use col nets since everything's rotated.
       rows:
         escape.row_net: col1
         one.row_net: col2
@@ -164,13 +188,14 @@ points:
         backspace.row_net: col14
         special.row_net: col15
 outlines:
-  # Outline for every key switch.
+  # Outline for every key switch. Used for switch plate.
   _keys:
     - what: rectangle
       where: [key]
       size: [14, 14]
       fillet: 0.5
-  # Extra nubbin' for USB port.
+  # The USB port needs a small nubbin' poking out from the main PCB.
+  # This rectangle is the main shape.
   _usb:
     - what: rectangle
       where: 
@@ -178,7 +203,8 @@ outlines:
           shift: [0, 21.5]
       size: [13.25, 6]
       fillet: 1
-  # USB cutout for mid-mount.
+  # USB nubbin' cutouts. Creates space for a mid-mount USB-C port.
+  # The left and right pieces give it a tapered shape.
   _usbcutout:
     - what: rectangle
       where:
@@ -209,13 +235,14 @@ outlines:
         - ref: controller_parts_mcu
           shift: [10.5, 22.75]
       radius: 4
-  # The final left and right supports.
+  # Combining the left and right tapered edges together.
   _leftsupport:
     - _leftsquare
     - -_leftcircle
   _rightsupport:
     - _rightsquare
     - -_rightcircle
+  # The base PCB shape without the USB nub.
   _border:
     - what: polygon
       points:
@@ -232,18 +259,26 @@ outlines:
         - ref: matrix_mod_escape # Bottom Left
           shift: [-0.5kx+pcbpadding, 0.125ky+0.5ky-pcbpadding]
       fillet: 1
-  # The outline for the keyboard PCB.
+  # The final outline for the keyboard PCB.
   _combo:
     - _border
     - _usb
     - _leftsupport
     - _rightsupport
     - -_usbcutout
-  # Full switch plate outline.
+  # Full switch plate outline. (Does not have a USB nub.)
   _plate:
     - _border
     - -_keys
-  # Stabilizer shim for just the spacebars.
+  # The 2u spacebar stabalizers require a switch plate.
+  # PCB fabs charge based off the size of the PCB, and this keyboard fairly large.
+  # As an alternate design, this switch plate "Shim" is only as large as the spacebar
+  # keys and their surrounding neighbors. The idea was to keep the cost of the PCB
+  # order as low as possible. Unfortunately, JLCPCB requested an additional $7 charge
+  # for this shim. The stabalizer cutouts are off-centered, and the top edge was thin
+  # enough that they wanted to spend some extra time to make sure it hadn't snapped off.
+  # This approach would probably work if you made it a *smidge* thicker. I ended up
+  # just going with the full switch palte. The shim is untested and just here for reference.
   _stabshim:
     - what: polygon
       points:
@@ -264,7 +299,7 @@ outlines:
   _stabsupport:
     - _stabshim
     - -_stabcutouts
-  # Case outlines
+  # Screw hole outlines. Used for case designing.
   _toplefthole:
     - what: circle
       radius: insert
@@ -313,7 +348,7 @@ outlines:
       where:
         ref: matrix_mod_backspace
         shift: [-4, 0.5ky]
-
+  # Outline section has an option for an inner border and outer border.
   case_inner_border:
     - what: polygon
       points:
@@ -330,6 +365,7 @@ outlines:
         - ref: matrix_mod_escape # Bottom Left
           shift: [-0.5kx-caseinnerpadding, 0.125ky+0.5ky+caseinnerpadding]
       fillet: 1
+  # PCB outline with screw holes for case construction.
   case_pcb:
     - case_inner_border
     - _usb
@@ -344,6 +380,7 @@ outlines:
     - -_bottomotherhole
     - -_toprighthole
     - -_bottomrighthole
+  # Outline for outer case border
   case_outline:
     - what: polygon
       points:
@@ -361,8 +398,9 @@ outlines:
           shift: [-0.5kx-casepadding, 0.125ky+0.5ky+casepadding]
       fillet: 1
 pcbs:
-  # Main PCB. Ergogen doesn't let you start PCBs with numbers.
-  # All MCU components are mounted on the back.
+  # Main PCB. Ergogen doesn't let you start names with numbers.
+  # Hence just 'crimes' instead of '65crimes'.
+  # All MCU components are mounted on the back of the PCB.
   # CH559L circuit based off the Partycrasher Micro design
   # by Semickolon https:#oshwlab.com/kkpjfobj/partycrasher-micro
   crimes:
@@ -370,7 +408,11 @@ pcbs:
       main:
         outline: _combo
     footprints:
-    # MCU
+    # MCU. The Microcontroller. The WCH(Jiangsu Qin Heng) CH559L.
+    # This build-in microcontroller leverages the FAK firmware.
+    # It has a 0.5mm pitch (space between the pins). The big reason for
+    # using the CH559L is the amount of pins available. If you can deal
+    # with fewer pins, the CH552 has a much more easier to manage 0.65mm pitch.  
     - what: ch559l
       where: controller_parts_mcu
       params:
@@ -400,7 +442,9 @@ pcbs:
       adjust:
         rotate: 90
         shift: [0, -0.5]
-    # ESD Protection
+    # Electro Static Discharge (ESD) Protection.
+    # Sits between your USB port and your MCU and makes sure that
+    # the things that shouldn't go zap don't go zap.
     - what: esd
       where: controller_parts_mcu
       params:
@@ -408,7 +452,7 @@ pcbs:
       adjust:
         rotate: 90
         shift: [0, 11.5]
-    # 3.3uf Cap
+    # 3.3uf Cap in front of the MCU's 3.3v line.
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -418,7 +462,7 @@ pcbs:
       adjust:
         rotate: 180
         shift: [8.5, -2]
-    # 100nf Cap
+    # 100nf Cap in front of the MCU's 5v line.
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -440,7 +484,7 @@ pcbs:
       adjust:
         rotate: 0
         shift: [0, 25]
-    # 5.1K Resistor
+    # 5.1K Resistor for the USB port.
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -450,7 +494,7 @@ pcbs:
       adjust:
         rotate: 180
         shift: [-9.75, 17]
-    # 5.1K Resistor
+    # The other 5.1K Resistor for the USB port.
     - what: smd805
       where: controller_parts_mcu
       params:
@@ -460,7 +504,8 @@ pcbs:
       adjust:
         rotate: 0
         shift: [9.75, 17]
-    # Boot Button
+    # Boot Button. Hold down while you plug the keyboard in
+    # for it to enter flashing mode.
     - what: button
       where: controller_parts_mcu
       params:
@@ -470,7 +515,7 @@ pcbs:
       adjust:
         rotate: 90
         shift: [0, -22]
-    # Reset Button.
+    # Reset Button. Three guesses as to what this does.
     - what: button
       where: controller_parts_mcu
       params:
@@ -481,6 +526,13 @@ pcbs:
         rotate: 180
         shift: [15.75, -0.5]
     # Standard 1u keys.
+    # Every key on this keyboard is rotated "-90" degrees.
+    # The keyboard is already rotated 270 degrees. In reality,
+    # these keys are flipped 180 degrees upside down from their standard
+    # orientation. The USB port and its resistors needed a bit more room
+    # to comfortably space out the components. Rather than just rotating
+    # those two keys, every key was flipped the same way to keep things
+    # consistent.
     - what: choc
       where: [u1]
       params:
@@ -493,7 +545,7 @@ pcbs:
         rotate: -90
         shift: [0, 0]
     # 1.25u keys.
-    - what: choc-cfx-125u
+    - what: choc-125u
       where: [u125]
       params:
         keycaps: true
@@ -505,7 +557,7 @@ pcbs:
         rotate: -90
         shift: [0, 0]
     # 1.75u keys.
-    - what: choc-cfx-175u
+    - what: choc-175u
       where: [u175]
       params:
         keycaps: true
@@ -516,8 +568,8 @@ pcbs:
       adjust:
         rotate: -90
         shift: [0, 0]
-    # Standard 2u Keys
-    - what: choc-cfx-2u
+    # 2u Keys
+    - what: choc-2u
       where: [u2]
       params:
         keycaps: true
@@ -528,12 +580,15 @@ pcbs:
       adjust:
         rotate: -90
         shift: [0, 0]
-    # 2u PCB Stabs
+    # 2u PCB Stabanlizers
     - what: choc-stab-2u
       where: [u2]
       adjust:
         rotate: 90
-    # SMD Diodes
+    # SMD Diodes. Due to the keyboard's rotation in Ergogen, these diodes
+    # are pointing backwards. You need to use "RowToCol" instead of "ColToRow".
+    # You could also probably swap the from: and to: variables, but I haven't
+    # tested that yet.
     - what: diode-rear
       where: [diode]
       params:
@@ -542,7 +597,15 @@ pcbs:
       adjust:
         rotate: -90
         shift: [-5, 0]
-    # SMD Diodes (Rotated)
+    # SMD Diodes (Rotated).
+    # So. About those 180 degree rotated standard 1u keys. (See the above comment on
+    # the 1u keys.) Flipping every key upside down worked for every key except for
+    # far left row. (Esc, tab, etc.) In their flipped state, the hotswap sockets clipped
+    # off the edge of the board. Spinning the keys around fixed the problem, but it left
+    # their diodes pointing in the opposite direction of all the other diodes on the keyboard.
+    # These "dioderotate" tagged keys have their diodes spun around to fix the orientation issue.
+    # This should help avoid any soldering issues. Electronically they're wired up the same
+    # as the rest of the keyboard matrix.
     - what: diode-rear
       where: [dioderotate]
       params:
@@ -552,6 +615,7 @@ pcbs:
         rotate: 90
         shift: [-5, 0]
     # SMD Diodes (Nudged)
+    # The top right two keys near the USB-C port need nudged down to make room for other components.
     - what: diode-rear
       where: [diodenudge]
       params:
@@ -560,6 +624,7 @@ pcbs:
       adjust:
         rotate: -90
         shift: [-3.5, 0]
+    # Mounting holes! M2 mounting holes with via-style plating.
     # Top Left Hole
     - what: m2mountinghole
       where: matrix_num_one
@@ -601,6 +666,9 @@ pcbs:
       adjust:
         shift: [-4, 0.5ky]
   # Standard Switchplate
+  # The Choc stabalizers need a switch plate. This is a typical switch plate with:
+  # A cutout for every key. A cutout for the stabanlizers. M2 mounting holes.
+  # If you fab this "PCB", make sure it's 1.2mm thick.
   switchplate:
     outlines:
       main:
@@ -652,6 +720,12 @@ pcbs:
       adjust:
         shift: [-4, 0.5ky]
   # Smaller switch plate that only covers the spacebars and adjacent modifier keys.
+  # JLCPCB wanted an extra 7mm due to the smaller pieces at the top of the shim.
+  # The choc stabanlizers aren't symetrical. You may be able to fab this without an
+  # additional cost by making things slightly larger. I just decided to make the full
+  # switch plate. There's no M2 screw holes or anything fancy about this piece.
+
+  # THIS PART HAS NOT BEEN TESTED. FAB AT YOUR OWN RISK.
   u2supportshim:
     outlines:
       main:
