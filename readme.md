@@ -1,6 +1,6 @@
 # 65 Crimes, a CH559L FAK Keyboard
 
-![The 65 Crimes Keyboard](./images/65crimesalt.jpg)
+![The 65 Crimes Keyboard](./images/65crimes.jpg)
 
 This is a 65% keyboard with the heart of a 40% keyboard. Nothing here is standard. It's not ergonomic. I have to be breaking some sort of keyboard law here. Welcome to the 65 Crimes.
 
@@ -75,7 +75,7 @@ After all the other experimentation with this keyboard, I stuck with what has wo
 
 ## The Build (and Lessons Learned)
 
-![The 65 Crimes Keyboard, Again](./images/65crimes.jpg)
+![The 65 Crimes Keyboard, Again](./images/65crimesalt.jpg)
 
 No long build guide this time unfortunately. There were a few false starts and fiddling with this keyboard, so I don't have step-by-step pictures to share. Overall the build went smoothly. The CH559L was the trickiest piece to solder. You need to line it up percicely, apply a bit of solder flux to one side, then quickly apply a bit of solder while the chip is still aligned. Once one of the legs is soldered properly, you can drag-solder the rest as you would with any other SMD component. The same approach goes for the USB-C port. The ESD protection chip, two capacitors, and two resistors should be a bit more straightforward.
 
