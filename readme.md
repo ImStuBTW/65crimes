@@ -34,6 +34,8 @@ Again, this is my first time working with an onboard microcontroller or the CH55
 
 ## The Firmware
 
+![The CH559L Chip](./images/65crimesch559l.jpg)
+
 One slight catch with the CH55X chips is that they can't run most of the popular keyboard firmwares. QMK and ZMK won't run on this particular microcontroller. Instead, the 65 Crimes leverages the relatively new [FAK keyboard](https://github.com/semickolon/fak) firmware.
 
 I didn't dive deep into it, but my first impression of FAK has been great. It's a declarative keyboard firmware that should be familiar for anyone who's worked with ZMK. It's nice having a purely functional firmware which throws errors at compile time if you've accidentally made an issue with your keyboard config.
