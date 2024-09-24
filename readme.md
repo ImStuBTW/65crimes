@@ -53,7 +53,7 @@ The 65 Crimes keyboard is also the first time I've designed a keyboard layout th
 
 Choc stabilizers require a switch plate. The plastic anchors need to be sandwiched between two layers of PCB (or other stiff material) to seat correctly. Thankfully Ergogen makes it pretty straightforward to make a switch plate. Fire up your PCB's outline, cut out a 14mm hole on each switch, add the stabilizer cutouts, drop in some mounting holes, and bam you're done. Unfortunately the 65 Crimes is a somewhat large keybaord by split ergonomic standards. JLCPCB wanted another $15 USD for the full switch plate.
 
-I experimented with making a cheaper stabalizer "shim". This was a smaller piece of PCB material that only covered the spacebar keys and the left and right modifiers next to them. The idea was that you could print off this smaller piece and save a few bucks during your prototyping.
+I experimented with making a cheaper stabilizer "shim". This was a smaller piece of PCB material that only covered the spacebar keys and the left and right modifiers next to them. The idea was that you could print off this smaller piece and save a few bucks during your prototyping.
 
 The actual stabilizer footprints come from a design put together by [FKCaps](https://github.com/FKcaps/mbk-footprints/tree/main). The cutout isn't symmetrical with the key switch and is aligned closer to the top edge. This resulted in the shim having a relatively thin piece of PCB material. JLCPCB wanted an extra $7 USD to make sure the hole was routed properly. Rather than iterating on this design further, I went ahead and just printed out the full switch plate. The switch plate worked great the first time thankfully, but I'm leaving the shim designs in here for anyone who's interested.
 
